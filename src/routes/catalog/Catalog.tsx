@@ -1,5 +1,4 @@
 import { Box, Grid } from '@mui/material'
-import { useEffect } from 'react'
 import { useAppSelector } from '../../utils/hooks'
 import ProductCard from './ProductCard'
 
