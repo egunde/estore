@@ -12,6 +12,17 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main]
+    
+env:
+  REACT_APP_API_KEY="AIzaSyAzMW4T5e_nWAZ83WR11igSOjMrVvSOL0s"
+  REACT_APP_AUTH_DOMAIN=estore-2.firebaseapp.com
+  REACT_APP_PROJECT_ID=estore-2
+  REACT_APP_STORAGE_BUCKET=estore-2.appspot.com
+  REACT_APP_MESSAGING_SENDER_ID="132243554776"
+  REACT_APP_APP_ID="1:132243554776:web:25682342a262e40ee0f2ad"
+  REACT_APP_MEAUREMENT_ID="G-3S9RYHGBSW"
+  REACT_APP_PUBLIC_STOREFRONT_API_TOKEN="64a7f46d1aeecb225084e930631ebb58"
+  REACT_APP_PUBLIC_STORE_DOMAIN=e10-test.myshopify.com
 
 jobs:
   build:
