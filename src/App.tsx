@@ -1,4 +1,3 @@
-
 import { createTheme, debounce } from "@mui/material";
 import { ThemeProvider } from "react-bootstrap";
 import { Provider } from "react-redux";
