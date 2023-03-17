@@ -1,5 +1,7 @@
 # estore
 
+[![Deploy to Firebase Hosting](https://github.com/egunde/estore/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://github.com/egunde/estore/actions/workflows/firebase-hosting-merge.yml)
+
 A React Redux e-commerce store.
 
 [Link](https://estore-2.web.app/)
