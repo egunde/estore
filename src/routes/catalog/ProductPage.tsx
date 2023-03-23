@@ -1,7 +1,7 @@
 import { Box, Button, Stack, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { useAppSelector } from '../../utils/hooks'
-import { formatCurrency } from '../utilities/formatCurrency'
+import { formatCurrency } from '../../utils/formatCurrency'
 
 
 export default function ProductPage() {

@@ -1,11 +1,14 @@
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Pagination, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { formatCurrency } from "../utilities/formatCurrency";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 
 
 export default function ProductCard(props: {product: ShopifyBuy.Product}) {
+    const { client } = useAppSelector(state => state.shopify)
+    const user = useAppSelector(state => state.user)
     const [page, setPage] = useState(1)
     //used to create Link
     const id = props.product.id.toString().substring(22)
@@ -14,9 +17,20 @@ export default function ProductCard(props: {product: ShopifyBuy.Product}) {
     const price = formatCurrency(props.product.variants.at(0)?.price.amount)
 
     const handlePage = (event: React.ChangeEvent<unknown>, value: number) => {
-        setPage(value);
+        setPage(value)
         console.log(value)
     };
+
+    const handleAddToCart = () => {
+        const vid = props.product.variants.at(page-1)!.id
+        const lineItemsToAdd = [{
+            variantId: vid,
+            quantity: 1,
+        }]
+        client?.checkout.addLineItems(user.cartID, lineItemsToAdd).then((checkout) =>{
+            console.log(checkout.lineItems)
+        })
+    }
 
     return (
         <Box width="30vh">
@@ -50,7 +64,7 @@ export default function ProductCard(props: {product: ShopifyBuy.Product}) {
                 </CardContent>
                 <CardActions>
                     <Stack direction='row' spacing={2}>
-                        <Button variant="contained" size='small'>
+                        <Button variant="contained" size='small' onClick={handleAddToCart}>
                             Add To Cart
                         </Button>
                         <Link 

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { auth } from "../../utils/firebase/Firebase";
 import { USER_LOGOUT } from "../../store/user/types";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
+import saveState from "../../utils/storage";
 
 
 
@@ -13,6 +14,7 @@ export default function Account() {
     const dispatch = useAppDispatch()
     const [isLoading, setIsLoading] = useState(true)
     const user = useAppSelector(state => state.user);
+    const { cart } = useAppSelector(state => state.shopify);
 
     useEffect(() => {
         updateUser()
@@ -30,6 +32,9 @@ export default function Account() {
     
     //When user clicks logout
     const handleLogout = () => {
+        //save cartID to localStorage
+        saveState("cartID", cart?.id)
+
         signOut(auth).then(() => {
             // Sign-out successful.
           }).catch((error) => {

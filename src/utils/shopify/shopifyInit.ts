@@ -17,7 +17,7 @@ export async function bootstrapShopify(): Promise<void> {
     try {
         // client
         const client = Client.buildClient(config);
-        store.dispatch({ type: CLIENT_CREATED, payload: { client } });
+        store.dispatch({ type: CLIENT_CREATED, payload: { client } }); 
 
         // products
         const products = await client.product.fetchAll();

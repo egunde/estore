@@ -6,6 +6,7 @@ export interface UserState {
     id: string,
     name: string,
     email: string,
+    cartID: string,
 }
 
 export interface UserCreatedAction {
@@ -14,6 +15,7 @@ export interface UserCreatedAction {
         id: string,
         name: string,
         email: string,
+        cartID: string,
     };
 }
 

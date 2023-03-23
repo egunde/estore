@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 import app from '../../utils/firebase/Firebase';
 import { USER_CREATED } from '../../store/user/types';
 import { useAppDispatch } from '../../utils/hooks';
+import { store, useAppSelector } from '../../store';
+import { CHECKOUT_CREATED } from '../../store/shopify/types';
+import { loadState } from '../../utils/storage';
 
 const userFields = {
     id: '',
@@ -21,7 +24,9 @@ const userFields = {
 export default function Register() {
     const dispatch = useAppDispatch()
     const auth = getAuth(app)
-    const [user, setUser] = useState(userFields)
+    const { client } = useAppSelector(state => state.shopify)
+    const { cart } = useAppSelector(state => state.shopify)
+    const [ user, setUser ] = useState(userFields)
 
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault()
@@ -33,12 +38,17 @@ export default function Register() {
                 await updateProfile(userCredential.user, {
                     displayName: user.name
                 })
+
+                //get cartID
+                const cid = cart?.id
+
                 //update client
                 dispatch({type: USER_CREATED,
                     payload: {
                         id: userCredential.user.uid,
                         name: userCredential.user.displayName,
-                        email: userCredential.user.email
+                        email: userCredential.user.email,
+                        cartID: cid
                     }
                 })
                 setUser({...user, message: `Welcome: ${userCredential.user.displayName}`})
