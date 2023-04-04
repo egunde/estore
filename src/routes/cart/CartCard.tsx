@@ -1,10 +1,7 @@
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Pagination, Stack, Typography, styled } from "@mui/material";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Button, Card, CardContent, CardMedia, Grid, Stack, Typography, styled } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { USER_CREATED } from "../../store/user/types";
-import { formatCurrency } from "../../utils/formatCurrency";
 import { CHECKOUT_CREATED } from "../../store/shopify/types";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 const StyledCard = styled(Card)({
     display: 'flex',
@@ -33,10 +30,6 @@ const StyledCard = styled(Card)({
 export default function CartCard(props: {item: ShopifyBuy.LineItem}) {
     const dispatch = useAppDispatch();
     const { client, cart } = useAppSelector(state => state.shopify)
-    const user = useAppSelector(state => state.user)
-    const [page, setPage] = useState(1)
-    //used to create Link to Product Page
-    const id = props.item.id.toString().substring(22)
     //this error is okay
     //@ts-ignore
     const price = formatCurrency((props.item.variant.price.amount as number) * props.item.quantity)

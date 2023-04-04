@@ -1,8 +1,8 @@
-import { Box, Button, Container, Grid, Paper, Stack, Typography, styled } from '@mui/material'
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Box, Button, Grid, Paper, Stack, Typography } from '@mui/material';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { CHECKOUT_CREATED } from '../../store/shopify/types';
-import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 import CartCard from './CartCard';
 
 

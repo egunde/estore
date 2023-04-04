@@ -1,16 +1,13 @@
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Pagination, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { USER_CREATED } from "../../store/user/types";
+import { useAppSelector } from "../../store";
 import { formatCurrency } from "../../utils/formatCurrency";
 
 
 
 export default function ProductCard(props: {product: ShopifyBuy.Product}) {
-    const dispatch = useAppDispatch;
     const { client, cart } = useAppSelector(state => state.shopify)
-    const user = useAppSelector(state => state.user)
     const [page, setPage] = useState(1)
     //used to create Link to Product Page
     const id = props.product.id.toString().substring(22)
@@ -38,7 +35,7 @@ export default function ProductCard(props: {product: ShopifyBuy.Product}) {
             } else {
                 cid = cart.id as string
             }
-            await client.checkout.addLineItems(cid, lineItemsToAdd).then((checkout) =>{
+            await client.checkout.addLineItems(cid, lineItemsToAdd).then(() =>{
                 //console.log(checkout.lineItems)
             }).catch((error) =>{
                 console.log(error)
