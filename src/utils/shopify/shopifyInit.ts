@@ -6,6 +6,7 @@ import {
     CHECKOUT_CREATED,
     SHOP_INFO_FETCHED,
 } from "../../store/shopify/types";
+import { loadState } from "../storage";
 
 const config = {
     storefrontAccessToken: `${process.env.REACT_APP_PUBLIC_STOREFRONT_API_TOKEN}`,
@@ -29,8 +30,18 @@ export async function bootstrapShopify(): Promise<void> {
         });
 
         // cart
-        const cart = await client.checkout.create();
-        store.dispatch({ type: CHECKOUT_CREATED, payload: { cart } });
+        const storedState = loadState("redux");
+        try {
+            if(storedState.shopify.cart){
+                const cart = storedState.shopify.cart;
+                store.dispatch({ type: CHECKOUT_CREATED, payload: { cart } });
+    
+            }
+        } catch (error) {
+            console.log(error)
+            const cart = await client.checkout.create();
+            store.dispatch({ type: CHECKOUT_CREATED, payload: { cart } });
+        }
 
         // shop
         const shop = await client.shop.fetchInfo();

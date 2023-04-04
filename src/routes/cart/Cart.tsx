@@ -1,20 +1,49 @@
-import { Box, Grid, Paper, Typography } from '@mui/material'
+import { Box, Button, Container, Grid, Paper, Stack, Typography, styled } from '@mui/material'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useAppSelector } from '../../utils/hooks'
+import { CHECKOUT_CREATED } from '../../store/shopify/types';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import CartCard from './CartCard';
+
 
 export default function Catalog() {
-    const { cart } = useAppSelector(state => state.shopify)
-    let mappedItems
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(state => state.user);
+    const { client, cart } = useAppSelector(state => state.shopify);
+    let mappedItems;
+
+    useEffect(() => {
+        updateCart();
+    }, [])
+
+    const updateCart = async () => {
+        if(cart && client){
+            let cid;
+            /*
+            Errors for cart.id.value are okay.
+            When the cart is created, it has a cart.id property based on the ShopifyBuy.Cart,
+            but the Storefront API returns the GraphQL version which contains a cart.id.value and cart.id.type properties.
+            */
+            //@ts-ignore
+            if(cart.id.value){
+                //@ts-ignore
+                cid = cart.id.value as string
+            } else {
+                cid = cart.id as string
+            }
+            const newCart = await client.checkout.fetch(cid).then((checkout) => {
+                dispatch({ type: CHECKOUT_CREATED, payload: {cart: checkout}});
+            }).catch((error) => {
+                console.log(error)
+            });
+        }
+    }
 
     //Create a grid of cards
-    if(cart) {
+    if(cart && cart.lineItems.length > 0) {
         mappedItems = cart.lineItems.map((item, index) => {
             return (
-                <Grid item key={index}>
-                    <Typography>
-                        {item.productId}
-                    </Typography>
-                </Grid>
+                <CartCard key={index} item={item}/>
             )
         })
     } else {
@@ -40,25 +69,61 @@ export default function Catalog() {
                         textAlign: "center"
                     }}
                 >
-                    <Link to='../login'>
+                    <Link to='../catalog'>
                         <Typography>
-                            Please Log In to View Your Cart
+                            Please Add Items to View Your Cart
                         </Typography>
                     </Link>
                 </Grid>
             </Grid>
         )
     }
-    
+
     return (
-        <Box p='10vh'>
-            <Grid 
-                container 
-                rowSpacing={1} 
-                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            >
-                {mappedItems}
-            </Grid> 
+        <Box p='10px'>
+            <Stack 
+                    justifyContent='center'
+                    alignItems='center'
+                    spacing={4}
+                    sx={{
+                        width: '100%',
+                        margin: 0,
+                        marginTop: 5
+                    }}
+                >
+                    {mappedItems}
+                    
+                    <Grid
+                        container
+                        direction='row'
+                        pr={16}
+                        spacing={3}
+                        sx={{
+                            justifyContent: 'right'
+                        }}
+                    >
+                        <Grid
+                            item
+                        >
+                            <Typography align='left'>
+                                Subtotal:
+                            </Typography>
+                        </Grid>
+
+                        <Grid
+                            item
+                        >
+                            <Typography align='right'>
+                                {//@ts-ignore
+                                cart?.subtotalPrice.amount}
+                            </Typography>
+                        </Grid>
+                        
+                    </Grid>
+                    <Button onClick={() => {window.location.href = cart.webUrl}}>
+                        Checkout
+                    </Button>
+                </Stack>
         </Box>
         
     )

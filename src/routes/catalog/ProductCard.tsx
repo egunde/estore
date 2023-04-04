@@ -2,15 +2,17 @@ import { Box, Button, Card, CardActions, CardContent, CardMedia, Pagination, Sta
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store";
+import { USER_CREATED } from "../../store/user/types";
 import { formatCurrency } from "../../utils/formatCurrency";
 
 
 
 export default function ProductCard(props: {product: ShopifyBuy.Product}) {
-    const { client } = useAppSelector(state => state.shopify)
+    const dispatch = useAppDispatch;
+    const { client, cart } = useAppSelector(state => state.shopify)
     const user = useAppSelector(state => state.user)
     const [page, setPage] = useState(1)
-    //used to create Link
+    //used to create Link to Product Page
     const id = props.product.id.toString().substring(22)
     //this error is okay
     //@ts-ignore
@@ -21,15 +23,27 @@ export default function ProductCard(props: {product: ShopifyBuy.Product}) {
         console.log(value)
     };
 
-    const handleAddToCart = () => {
+    const handleAddToCart = async () => {
         const vid = props.product.variants.at(page-1)!.id
         const lineItemsToAdd = [{
             variantId: vid,
             quantity: 1,
         }]
-        client?.checkout.addLineItems(user.cartID, lineItemsToAdd).then((checkout) =>{
-            console.log(checkout.lineItems)
-        })
+        if(cart && client){let cid;
+            //Error is okay. ShopifyBuy.Cart has no cart.id.value property, but the API returns a Scalar: {type: {<info>}, value: <value>}.
+            //@ts-ignore
+            if(cart.id.value){
+                //@ts-ignore
+                cid = cart.id.value as string
+            } else {
+                cid = cart.id as string
+            }
+            await client.checkout.addLineItems(cid, lineItemsToAdd).then((checkout) =>{
+                //console.log(checkout.lineItems)
+            }).catch((error) =>{
+                console.log(error)
+            })
+        }
     }
 
     return (
