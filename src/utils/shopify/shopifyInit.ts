@@ -35,7 +35,9 @@ export async function bootstrapShopify(): Promise<void> {
             if(storedState.shopify.cart){
                 const cart = storedState.shopify.cart;
                 store.dispatch({ type: CHECKOUT_CREATED, payload: { cart } });
-    
+            } else {
+                const cart = await client.checkout.create();
+                store.dispatch({ type: CHECKOUT_CREATED, payload: { cart } });
             }
         } catch (error) {
             console.log(error)
