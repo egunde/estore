@@ -4,12 +4,10 @@ import { Box, Grid, Paper, TextField, Typography } from '@mui/material';
 import { updateProfile } from 'firebase/auth';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import app from '../../utils/firebase/Firebase';
+import { useAppSelector } from '../../store';
 import { USER_CREATED } from '../../store/user/types';
+import app from '../../utils/firebase/Firebase';
 import { useAppDispatch } from '../../utils/hooks';
-import { store, useAppSelector } from '../../store';
-import { CHECKOUT_CREATED } from '../../store/shopify/types';
-import { loadState } from '../../utils/storage';
 
 const userFields = {
     id: '',
@@ -24,7 +22,6 @@ const userFields = {
 export default function Register() {
     const dispatch = useAppDispatch()
     const auth = getAuth(app)
-    const { client } = useAppSelector(state => state.shopify)
     const { cart } = useAppSelector(state => state.shopify)
     const [ user, setUser ] = useState(userFields)
 

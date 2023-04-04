@@ -8,7 +8,6 @@ import CartCard from './CartCard';
 
 export default function Catalog() {
     const dispatch = useAppDispatch();
-    const user = useAppSelector(state => state.user);
     const { client, cart } = useAppSelector(state => state.shopify);
     let mappedItems;
 
@@ -31,7 +30,7 @@ export default function Catalog() {
             } else {
                 cid = cart.id as string
             }
-            const newCart = await client.checkout.fetch(cid).then((checkout) => {
+            await client.checkout.fetch(cid).then((checkout) => {
                 dispatch({ type: CHECKOUT_CREATED, payload: {cart: checkout}});
             }).catch((error) => {
                 console.log(error)

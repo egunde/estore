@@ -19,14 +19,10 @@ const userFields = {
     message: ''
 }
 
-//!!!!!!!!!!!!!!!!!!!!!!
-//YOU WERE WORKING ON THE CART FLOW AND ASSIGNING IT TO THE USER CREDS
-//!!!!!!!!!!!!!!!!!!!!!!
 export default function Login() {
     const dispatch = useAppDispatch()
     const auth = getAuth(app)
     const { cart } = useAppSelector(state => state.shopify)
-    const [cartID, setCartID] = useState("")
     const [user, setUser] = useState(userFields)
     
     useEffect(() => {
