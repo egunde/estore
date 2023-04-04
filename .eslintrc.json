@@ -25,6 +25,7 @@
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
         //IMPORTANT this is suppressing the ignore warning so there may be uncaught errors
         "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
         "linebreak-style": 0,
         "@typescript-eslint/no-explicit-any": ["off"]
     }

@@ -14,7 +14,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,
     }),
-    preloadedState: loadState(),
+    preloadedState: loadState("redux"),
 });
 
 export type AppDispatch = typeof store.dispatch;

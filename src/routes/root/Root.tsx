@@ -7,7 +7,7 @@ import { store } from '../../store'
 
 store.subscribe(
     debounce(() => {
-        saveState(store.getState())
+        saveState("redux", store.getState())
         console.log('state saved')
     }, 500)
 )
@@ -15,7 +15,7 @@ store.subscribe(
 export default function Root() {
     
     useEffect(() => {
-        loadState()
+        loadState("redux")
     })
 
     return (

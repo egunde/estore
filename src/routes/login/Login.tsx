@@ -4,9 +4,11 @@ import { Box, Grid, Paper, TextField, Typography } from '@mui/material';
 import { getAuth, getRedirectResult, signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import app, { signInWithGoogle } from '../../utils/firebase/Firebase';
+import { useAppSelector } from '../../store';
 import { USER_CREATED } from '../../store/user/types';
+import app, { signInWithGoogle } from '../../utils/firebase/Firebase';
 import { useAppDispatch } from '../../utils/hooks';
+import { loadState } from '../../utils/storage';
 
 const userFields = {
     id: '',
@@ -20,25 +22,29 @@ const userFields = {
 export default function Login() {
     const dispatch = useAppDispatch()
     const auth = getAuth(app)
+    const { cart } = useAppSelector(state => state.shopify)
     const [user, setUser] = useState(userFields)
-
-
+    
     useEffect(() => {
         loadUser()
     }, [])
 
-    //Updates user on refresh
+    //Updates user on effect
     const loadUser = async () => {
         //After signInWithGoogle, collect the result
         getRedirectResult(auth)
         .then(async (userCredential) => {
+            //get cartID from storage
+            const cid = loadState("cartID")
+
             if(userCredential){
                 dispatch({
                     type: USER_CREATED, 
                     payload: {
                         id: userCredential.user.uid,
                         name: userCredential.user.displayName,
-                        email: userCredential.user.email
+                        email: userCredential.user.email,
+                        cartID: cid,
                     }
                 })
             }
@@ -67,16 +73,19 @@ export default function Login() {
 
 
     //Handle form information
-    const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleFormSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault()
         setUser({...user, isLoading: true})
         signInWithEmailAndPassword(auth, user.email, user.password)
         .then((userCredential) => {
+            //get cartID
+            const cid = cart?.id;
             dispatch({type: USER_CREATED, 
                 payload: {
                     id: userCredential.user.uid,
                     name: userCredential.user.displayName,
-                    email: userCredential.user.email
+                    email: userCredential.user.email,
+                    cartID: cid,
                 }
             })
             setUser({...user, message: `Welcome: ${userCredential.user.displayName}`})
@@ -147,7 +156,7 @@ export default function Login() {
                         loading={user.isLoading}
                         type="submit"
                         variant="contained"
-                        onClick={handleSubmit}
+                        onClick={handleFormSubmit}
                         fullWidth
                     >
                         Submit

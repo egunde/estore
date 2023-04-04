@@ -1,18 +1,19 @@
-import { createTheme, debounce } from "@mui/material";
+import { createTheme } from "@mui/material";
 import { ThemeProvider } from "react-bootstrap";
 import { Provider } from "react-redux";
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
 import Account from './routes/account/Account';
+import Cart from "./routes/cart/Cart";
 import Catalog from './routes/catalog/Catalog';
 import ProductPage from './routes/catalog/ProductPage';
 import Home from './routes/home/Home';
 import NotFound from './routes/layout/NotFound';
 import Login from './routes/login/Login';
 import Register from './routes/login/Register';
-import Root from './routes/root/Root';
+import Root from "./routes/root/Root";
 import { store } from "./store";
 import { bootstrapShopify } from "./utils/shopify/shopifyInit";
-import saveState from "./utils/storage";
+
 
 const theme = createTheme({
     palette: {
@@ -39,13 +40,6 @@ const theme = createTheme({
     }
   });
 
-store.subscribe(
-  debounce(() => {
-    saveState(store.getState())
-    console.log('state saved')
-  }, 500)
-)
-
 const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<Root />} path='/' errorElement={<NotFound/>}>
@@ -55,6 +49,7 @@ const router = createBrowserRouter(
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/account' element={<Account />} />
+        <Route path='/cart' element={<Cart />} />
       </Route>
     )
   );

@@ -9,6 +9,7 @@ const initialState: UserState = {
     id: '',
     name: '',
     email: '',
+    cartID: '',
 };
 
 export function userReducer(
@@ -22,6 +23,7 @@ export function userReducer(
                 id: action.payload.id,
                 name: action.payload.name,
                 email: action.payload.email,
+                cartID: action.payload.cartID,
             };
         case USER_LOGOUT:
             return initialState
