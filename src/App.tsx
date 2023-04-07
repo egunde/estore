@@ -13,6 +13,7 @@ import Register from './routes/login/Register';
 import Root from "./routes/root/Root";
 import { store } from "./store";
 import { bootstrapShopify } from "./utils/shopify/shopifyInit";
+import ThankYou from "./routes/thankyou/ThankYou";
 
 
 const theme = createTheme({
@@ -50,6 +51,7 @@ const router = createBrowserRouter(
         <Route path='/register' element={<Register />} />
         <Route path='/account' element={<Account />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/thankyou' element={<ThankYou />} />
       </Route>
     )
   );

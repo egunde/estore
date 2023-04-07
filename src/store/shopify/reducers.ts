@@ -2,6 +2,7 @@ import {
     CLIENT_CREATED,
     PRODUCTS_FETCHED,
     CHECKOUT_CREATED,
+    CHECKOUT_DELETED,
     SHOP_INFO_FETCHED,
     ShopifyState,
     ShopifyActionTypes,
@@ -25,6 +26,8 @@ export function shopifyReducer(
             return { ...state, products: action.payload.products };
         case CHECKOUT_CREATED:
             return { ...state, cart: action.payload.cart };
+        case CHECKOUT_DELETED:
+            return { ...state, cart: null };
         case SHOP_INFO_FETCHED:
             return { ...state, shop: action.payload.shop };
         default:

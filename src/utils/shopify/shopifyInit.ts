@@ -31,6 +31,7 @@ export async function bootstrapShopify(): Promise<void> {
 
         // cart
         const storedState = loadState("redux");
+        //this is not a great solutino
         try {
             if(storedState.shopify.cart){
                 const cart = storedState.shopify.cart;

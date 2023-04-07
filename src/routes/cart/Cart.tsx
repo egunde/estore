@@ -119,8 +119,8 @@ export default function Catalog() {
                         </Grid>
                         
                     </Grid>
-                    <Button onClick={() => {window.location.href = cart.webUrl}}>
-                        Checkout
+                    <Button variant="contained" onClick={() => {window.location.href = cart.webUrl}}>
+                        Bogus Checkout
                     </Button>
                 </Stack>
         </Box>

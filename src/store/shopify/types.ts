@@ -3,6 +3,7 @@ import { Client, Shop, Cart, Product } from "shopify-buy";
 export const CLIENT_CREATED = "CLIENT_CREATED";
 export const PRODUCTS_FETCHED = "PRODUCTS_FETCHED";
 export const CHECKOUT_CREATED = "CHECKOUT_CREATED";
+export const CHECKOUT_DELETED = "CHECKOUT_DELETED";
 export const SHOP_INFO_FETCHED = "SHOP_INFO_FETCHED";
 
 export interface ShopifyState {
@@ -40,8 +41,13 @@ export interface CheckoutCreatedAction {
     };
 }
 
+export interface CheckoutDeletedAction {
+    type: typeof CHECKOUT_DELETED;
+}
+
 export type ShopifyActionTypes =
     | ClientCreatedAction
     | ProductsFetchedAction
     | CheckoutCreatedAction
+    | CheckoutDeletedAction
     | ShopInfoFetchedAction;
