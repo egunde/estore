@@ -1,27 +1,76 @@
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Pagination, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../store";
 import { formatCurrency } from "../../utils/formatCurrency";
-
+import { colorStyles } from "../../utils/theming/colors";
 
 
 export default function ProductCard(props: {product: ShopifyBuy.Product}) {
-    const { client, cart } = useAppSelector(state => state.shopify)
-    const [page, setPage] = useState(1)
     //used to create Link to Product Page
     const id = props.product.id.toString().substring(22)
+    const { client, cart } = useAppSelector(state => state.shopify)
+    const [clicked, setClicked] = useState({click: false, index: 0, src: ''});
+    const [imgSrc, setImgSrc] = useState("")
+    const open = Boolean(imgSrc !== "")
     //this error is okay
     //@ts-ignore
     const price = formatCurrency(props.product.variants.at(0)?.price.amount)
+    let mappedColors
 
-    const handlePage = (event: React.ChangeEvent<unknown>, value: number) => {
-        setPage(value)
-        console.log(value)
+    const colors = props.product.options.find(opt => opt.name === "Color")?.values
+
+    const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+        const img = event.currentTarget.getAttribute('data-remove')
+        setImgSrc(img!)
+    };
+    const handlePopoverClose = () => {
+        if(!clicked.click){
+            setImgSrc("")
+        }
     };
 
+    if(colors){
+        const boxWidth = `${100/colors.length}%`
+        mappedColors = colors.map((color, index) => {
+            const imgUrl = props.product.variants.at(index)?.image.src
+            const colorStyle = colorStyles.find(col => col.names.includes(color.value))?.value
+            return(
+                <Box
+                    key={index}
+                    data-remove={imgUrl}
+                    component='div'
+                    aria-owns={open ? 'mouse-over-popover' : undefined}
+                    aria-haspopup="true"
+                    onClick={() => {
+                        setClicked({
+                            click: clicked.click ? (clicked.index !== index ? true : false) : true, 
+                            index: index, 
+                            src: imgUrl!
+                        })
+                        setImgSrc(imgUrl!)
+                    }}
+                    onMouseEnter={clicked.click ? undefined : handlePopoverOpen}
+                    onMouseLeave={handlePopoverClose}
+                    sx={{
+                        ...colorStyle,
+                        width: boxWidth,
+                        height: clicked.click && clicked.index === index ? '25px' : '20px',
+                        mt: clicked.click && clicked.index === index ? '-5px' : '0px',
+                        "&:hover": {
+                            height: '25px',
+                            border: 1,
+                            mt: '-5px' // move the box up by 5px
+                        }
+                    }} 
+                />
+            )
+        })
+    }
+
+    
     const handleAddToCart = async () => {
-        const vid = props.product.variants.at(page-1)!.id
+        const vid = props.product.variants.at(0)!.id
         const lineItemsToAdd = [{
             variantId: vid,
             quantity: 1,
@@ -44,7 +93,7 @@ export default function ProductCard(props: {product: ShopifyBuy.Product}) {
     }
 
     return (
-        <Box width="30vh">
+        <Box width="30vh" borderRadius={0}>
             <Card>
                 <CardMedia
                     component="div"
@@ -52,18 +101,15 @@ export default function ProductCard(props: {product: ShopifyBuy.Product}) {
                     <Box
                         component="img"
                         alt={props.product.title}
-                        src={props.product.images.at(page-1)?.src}
+                        src={open ? imgSrc : props.product.images.at(0)?.src}
                         sx={{
                             height: "30vh",
                             width: "30vh"
                         }}
                     />
-                    <Pagination 
-                        count={props.product.images.length} 
-                        siblingCount={0} 
-                        page={page} 
-                        onChange={handlePage}
-                    />
+                    <Stack direction='row'>
+                        {mappedColors}
+                    </Stack>
                 </CardMedia>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
