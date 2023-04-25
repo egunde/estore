@@ -6,7 +6,7 @@ A React Redux e-commerce store.
 
 [Link](https://estore-2.web.app/)
 
-Hosted on Firebase using Authentication for user accounts.
-Uses Shopify's Storefront API for products.
+Hosted on Firebase. Uses Firebase Authentication for user accounts.
+Shopify's Storefront API for products and checkout. Shopify's JS Buy SDK is used for fetching data.
 
-TODO: Add Cart & Checkout from Storefront API, Testing
+TODO: Styling, Testing, Migrate JS Buy SDK to GraphQL
