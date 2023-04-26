@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Card, CardContent, CardMedia, Grid, Stack } from '@mui/material'
+import { Card, CardContent, CardMedia, Grid, Stack, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { Link, Outlet } from 'react-router-dom'
 
@@ -31,6 +31,9 @@ export default function Home() {
 
     return (
     <Stack>
+        <Typography>
+            WIP
+        </Typography>
         <Box
             component='img'
             alt='Banner Graphic'

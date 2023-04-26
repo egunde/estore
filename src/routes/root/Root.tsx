@@ -5,6 +5,11 @@ import { useEffect } from 'react'
 import saveState, { loadState } from '../../utils/storage'
 import { store } from '../../store'
 
+/*
+*   First element rendered by React Router
+*   Also retrieves the state from localStorage when rendered
+*/
+
 store.subscribe(
     debounce(() => {
         saveState("redux", store.getState())

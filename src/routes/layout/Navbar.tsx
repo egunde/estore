@@ -1,15 +1,11 @@
-import { Box, Button, Dialog, Hidden, Slide } from '@mui/material';
+import { Box, Dialog, Hidden, Slide, Typography } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const navbarItems = [
   {
-    text: 'Home',
-    to: '/',
-  },
-  {
-    text: 'Product',
+    text: 'Products',
     to: '/catalog',
   },
   {
@@ -42,7 +38,7 @@ const myStyles = {
   navbar: {
     background:
       'linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%)',
-    height: '80px',
+    height: '100px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -165,14 +161,13 @@ function Navbar() {
 
   const mappedItems = navbarItems.map(({ to, text }, index) => {
     return (
-      <Link key={index} to={to} className='navbarItem' style={myStyles.navItem}>
-        <Button
+      <Link key={index} to={to} className='navbarItem' style={myStyles.navItem} onClick={onCloseHandler}>
+        <Typography
           className='navLinks'
           style={myStyles.navLinks}
-          onClick={onCloseHandler}
         >
           {text}
-        </Button>
+        </Typography>
       </Link>
     );
   });
@@ -183,34 +178,33 @@ function Navbar() {
         to={to}
         className='navItemMobile'
         style={myStyles['@media screen and (max-width: 960px)'].navItemMobile}
+        onClick={onCloseHandler}
       >
-        <Button
-          className='navLinksMobileNew'
-          style={
-            myStyles['@media screen and (max-width: 960px)'].navLinksMobileNew
-          }
-          onClick={onCloseHandler}
+        <Typography
+          className='navLinks'
+          style={myStyles.navLinks}
         >
           {text}
-        </Button>
+        </Typography>
       </Link>
     );
   });
 
   return (
-    <>
+    <Box>
       <nav className='navbar' style={myStyles.navbar}>
-        <Button className='navbarItem' style={myStyles.navItem}>
-          <Link
-            to='/'
-            className='navbarLogo'
-            style={myStyles.navbarLogo}
-            onClick={onCloseHandler}
-          >
-            {/* STORE NAME */}
-            <i className='fa fa-store' />
-          </Link>
-        </Button>
+        <Link
+                to='/'
+                className='navbarLogo'
+                style={myStyles.navbarLogo}
+                onClick={onCloseHandler}
+            >
+            <Box
+                component='img'
+                height="100%"
+                src='images/logo.png'
+            />
+        </Link>
 
         <div className='navbarContainer'>
           <Hidden mdDown>
@@ -264,7 +258,7 @@ function Navbar() {
           </Dialog>
         </Hidden>
       </nav>
-    </>
+    </Box>
   );
 }
 
