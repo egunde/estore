@@ -1,157 +1,53 @@
-import styled from '@emotion/styled'
-import { Card, CardContent, CardMedia, Grid, Stack, Typography } from '@mui/material'
-import { Box } from '@mui/system'
-import { Link, Outlet } from 'react-router-dom'
+import { Box, Stack, Typography } from '@mui/material';
+import { styled, useTheme } from '@mui/material/styles';
 
-const StyledCard = styled(Card)({
-    raised: true,
-    color: '#fafafa',
-    backgroundColor: '#004a9f',
-    height: 250,
-    width: 200,
-    '.MuiCardMedia-root': {
-        backgroundColor: '#fff',
-        width: '200px',
-        height: '200px',
-        objectFit: 'contain',
-        justifyContent: 'center',
-        alignContent: 'center'
-    },
-    '.MuiCardContent-root': {
-        textAlign: 'center',
-        fontWeight: '500',
-        //fontFamily: theme.
-    },
-    '.MuiButtonBase-root': {
-        color: '#000',
-    }
-})
+
+const KitSelectionBox = styled('div')(({theme}) => ({
+    backgroundColor: theme.palette.primary.light,
+    height: 100,
+    width: 100,
+    border: '2px dashed',
+    borderRadius: 10,
+}))
 
 export default function Home() {
+    const theme = useTheme();
+
 
     return (
-    <Stack>
-        <Typography>
-            WIP
-        </Typography>
-        <Box
-            component='img'
-            alt='Banner Graphic'
-            display='flex'
-            src="images/first-sale-banner.png"
-            sx={{
-                width: '100%',
-                height: '100%',
-                padding: 0,
-                margin: 0,
-            }}
-        />
-        <Grid 
-            container
-            justifyContent='center'
-            spacing={4}
-            sx={{
-                width: '100%',
-                margin: 0,
-                height: 500,
-            }}
-        >
-            <Grid item sx={{width: '250px', height: '100px'}}>
-                <Link
-                    to='/catalog'
-                    style={{textDecoration: 'none'}}
+        <Stack>
+            <Box
+                sx={{
+                    marginTop: '-100px'
+                }}
+            >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill={theme.palette.primary.main} d="M0,192L60,186.7C120,181,240,171,360,160C480,149,600,139,720,149.3C840,160,960,192,1080,192C1200,192,1320,160,1380,144L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+            </svg>
+            <Box
+                sx={{
+                    backgroundColor: theme.palette.primary.main,
+                    height: '500px'
+                }}
+            >
+                <Typography variant='h1' color='#fff' ml='14vh'
+                    sx={{fontFamily: theme.typography.fontFamily}}
                 >
-                    <StyledCard>
-                        <CardMedia 
-                            component="img"
-                            height="180"
-                            alt="category image"
-                            src="images/product5.png"   
-                        />
-                        <CardContent>
-                            Desk
-                        </CardContent>
-                    </StyledCard>
-                </Link>
-            </Grid>
-            
-            <Grid item sx={{width: '250px', height: '100px'}}>
-                <Link
-                    to='/catalog'
-                    style={{textDecoration: 'none'}}
-                >
-                    <StyledCard>
-                        <CardMedia 
-                            component="img"
-                            height="180"
-                            alt="category image"
-                            src="images/product10.png"
-                        />
-                        <CardContent>
-                            Drinkware
-                        </CardContent>
-                    </StyledCard>
-                </Link>
-            </Grid>
+                    Build Your Kit
+                </Typography>
+                <Stack direction='row' spacing={4} ml='14vh' mt='40px'>
+                    <KitSelectionBox></KitSelectionBox>
+                    <KitSelectionBox/>
+                    <KitSelectionBox/>
+                    <KitSelectionBox/>
+                    <KitSelectionBox/>
+                </Stack>
+            </Box>
 
-            <Grid item sx={{width: '250px', height: '100px'}}>
-                <Link
-                    to='/catalog'
-                    style={{textDecoration: 'none'}}
-                >
-                    <StyledCard>
-                        <CardMedia 
-                            component="img"
-                            height="180"
-                            alt="category image"
-                            src="images/product15.png"
-                        />
-                        <CardContent>
-                            Productivity
-                        </CardContent>
-                    </StyledCard>
-                </Link>
-            </Grid>
-
-            <Grid item sx={{width: '250px', height: '100px'}}>
-                <Link
-                    to='/catalog'
-                    style={{textDecoration: 'none'}}
-                >
-                    <StyledCard>
-                        <CardMedia 
-                            component="img"
-                            height="180"
-                            alt="category image"
-                            src="images/product20.png"
-                        />
-                        <CardContent>
-                            Art & Decor
-                        </CardContent>
-                    </StyledCard>
-                </Link>
-            </Grid>
-
-            <Grid item sx={{width: '250px', height: '100px'}}>
-                <Link
-                    to='/catalog'
-                    style={{textDecoration: 'none'}}
-                >
-                    <StyledCard>
-                        <CardMedia 
-                            component="img"
-                            height="180"
-                            alt="category image"
-                            src="images/product25.png"   
-                        />
-                        <CardContent>
-                            Apparel
-                        </CardContent>
-                    </StyledCard>
-                </Link>
-            </Grid>
-        </Grid>
-        <Outlet />
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill={theme.palette.primary.main} d="M0,192L60,186.7C120,181,240,171,360,160C480,149,600,139,720,149.3C840,160,960,192,1080,192C1200,192,1320,160,1380,144L1440,128L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path>
+            </svg>
+            </Box>
         </Stack>
     )
 }

@@ -1,5 +1,3 @@
-import { createTheme } from "@mui/material";
-import { ThemeProvider } from "react-bootstrap";
 import { Provider } from "react-redux";
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
 import Account from './routes/account/Account';
@@ -11,35 +9,12 @@ import NotFound from './routes/layout/NotFound';
 import Login from './routes/login/Login';
 import Register from './routes/login/Register';
 import Root from "./routes/root/Root";
+import ThankYou from "./routes/thankyou/ThankYou";
 import { store } from "./store";
 import { bootstrapShopify } from "./utils/shopify/shopifyInit";
-import ThankYou from "./routes/thankyou/ThankYou";
 
 
-const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#0052cc',
-      },
-      secondary: {
-        main: '#edf2ff',
-      },
-    },
-    typography: {
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(','),
-    }
-  });
+
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -60,9 +35,7 @@ function App() {
   bootstrapShopify()
   return (
     <Provider store={store} >
-        <ThemeProvider theme={ theme }>
             <RouterProvider router={router} />
-        </ThemeProvider>
     </Provider>
   );
 }

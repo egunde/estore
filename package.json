@@ -9,7 +9,7 @@
     "@google-cloud/secret-manager": "^4.2.1",
     "@mui/icons-material": "^5.10.14",
     "@mui/lab": "^5.0.0-alpha.111",
-    "@mui/material": "^5.10.17",
+    "@mui/material": "^5.12.3",
     "@reduxjs/toolkit": "^1.9.0",
     "@shopify/shopify-api": "^6.1.0",
     "@testing-library/jest-dom": "^5.16.5",
