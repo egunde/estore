@@ -1,6 +1,5 @@
-import { Box, Button, Fade, Slide, Stack, Typography } from '@mui/material';
+import { Box, Button, Slide, Stack, Typography } from '@mui/material';
 import { Theme, useTheme } from '@mui/material/styles';
-import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -40,7 +39,6 @@ export default function Home() {
     const theme = useTheme()
     const styles = useStyles(theme);
     const [step, setStep] = useState(1);
-    const containerRef = React.useRef(null);
 
     const KitSelectionBoxes = Array.from(Array(5).keys()).map((index) => {
         return (
