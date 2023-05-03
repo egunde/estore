@@ -1,5 +1,7 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Button, Fade, Slide, Stack, Typography } from '@mui/material';
 import { Theme, useTheme } from '@mui/material/styles';
+import React from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 
@@ -37,6 +39,8 @@ const useStyles = (theme: Theme) => ({
 export default function Home() {
     const theme = useTheme()
     const styles = useStyles(theme);
+    const [step, setStep] = useState(1);
+    const containerRef = React.useRef(null);
 
     const KitSelectionBoxes = Array.from(Array(5).keys()).map((index) => {
         return (
@@ -70,17 +74,41 @@ export default function Home() {
             <Box
                 sx={{
                     backgroundColor: theme.palette.primary.dark,
-                    height: '500px',
+                    height: '300px',
                 }}
             >
-                <Box sx={styles.stepContainer}>
-                    <Typography variant='h1' sx={styles.stepHeading}>
-                        Build Your Kit
-                    </Typography>
-                    <Stack direction='row' spacing={4} sx={styles.stepStack}>
-                        {KitSelectionBoxes}
-                    </Stack>
-                </Box>
+                <Slide direction="left" in={step===1} mountOnEnter unmountOnExit style={{position: 'absolute',zIndex: 0}}>
+                    <Box sx={styles.stepContainer}>
+                        <Typography variant='h1' sx={styles.stepHeading}>
+                            Build Your Kit
+                        </Typography>
+                        <Button onClick={() => {setStep(step+1)}}>
+                            1
+                        </Button>
+                        <Button onClick={() => {setStep(step-1)}}>
+                            -1
+                        </Button>
+                        <Stack direction='row' spacing={4} sx={styles.stepStack}>
+                            {KitSelectionBoxes}
+                        </Stack>
+                    </Box>
+                </Slide>
+                <Slide direction="left" in={step===2} mountOnEnter unmountOnExit style={{transform: 'translateY(-300px)',position: 'absolute', marginTop: -100, left: 0, zIndex: 1}}>
+                    <Box sx={styles.stepContainer}>
+                        <Typography variant='h1' sx={styles.stepHeading}>
+                            Build Your Kit
+                        </Typography>
+                        <Button onClick={() => {setStep(step+1)}}>
+                            1
+                        </Button>
+                        <Button onClick={() => {setStep(step-1)}}>
+                            -1
+                        </Button>
+                        <Stack direction='row' spacing={4} sx={styles.stepStack}>
+                            {KitSelectionBoxes}
+                        </Stack>
+                    </Box>
+                </Slide>
             </Box>
 
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
