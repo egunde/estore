@@ -1,63 +1,10 @@
-import { Box, Button, Slide, Stack, Typography } from '@mui/material';
-import { Theme, useTheme } from '@mui/material/styles';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Box, Stack, useTheme } from '@mui/material';
+import KitBuilder from './KitBuilder';
 
-
-const useStyles = (theme: Theme) => ({
-    stepContainer: {
-        marginLeft:'200px',
-        marginTop: '-100px'
-    },
-    stepHeading: {
-        color: '#fff',
-        fontWeight:'bold',
-    },
-    stepStack: {
-        marginTop: '40px'
-    },
-    kitSelectionBox: {
-        height: '100px',
-        width: '100px',
-        border: '2px dashed',
-        borderRadius: 4,
-        backgroundColor: theme.palette.primary.main,
-    },
-    plus: {
-        display: 'flex',
-        color: '#fff',
-        fontWeight: 'bold',
-        height: '100%',
-        width: '100%',
-        justifyContent: 'center',
-        alignContent: 'center',
-        marginTop: '4px'
-    }
-})
 
 export default function Home() {
-    const theme = useTheme()
-    const styles = useStyles(theme);
-    const [step, setStep] = useState(1);
-
-    const KitSelectionBoxes = Array.from(Array(5).keys()).map((index) => {
-        return (
-            <Box 
-                key={index}
-                sx={styles.kitSelectionBox}
-            >
-                
-                <Link to='/catalog' style={{textDecoration: 'none'}}> 
-                <Typography 
-                    variant='h2'
-                    sx={styles.plus}
-                >   
-                    +
-                </Typography>
-                </Link>
-            </Box>
-        )
-    })
+    const theme = useTheme();
+    
 
     return (
         <Stack>
@@ -75,38 +22,7 @@ export default function Home() {
                     height: '300px',
                 }}
             >
-                <Slide direction="left" in={step===1} mountOnEnter unmountOnExit style={{position: 'absolute',zIndex: 0}}>
-                    <Box sx={styles.stepContainer}>
-                        <Typography variant='h1' sx={styles.stepHeading}>
-                            Build Your Kit
-                        </Typography>
-                        <Button onClick={() => {setStep(step+1)}}>
-                            1
-                        </Button>
-                        <Button onClick={() => {setStep(step-1)}}>
-                            -1
-                        </Button>
-                        <Stack direction='row' spacing={4} sx={styles.stepStack}>
-                            {KitSelectionBoxes}
-                        </Stack>
-                    </Box>
-                </Slide>
-                <Slide direction="left" in={step===2} mountOnEnter unmountOnExit style={{transform: 'translateY(-300px)',position: 'absolute', marginTop: -100, left: 0, zIndex: 1}}>
-                    <Box sx={styles.stepContainer}>
-                        <Typography variant='h1' sx={styles.stepHeading}>
-                            Build Your Kit
-                        </Typography>
-                        <Button onClick={() => {setStep(step+1)}}>
-                            1
-                        </Button>
-                        <Button onClick={() => {setStep(step-1)}}>
-                            -1
-                        </Button>
-                        <Stack direction='row' spacing={4} sx={styles.stepStack}>
-                            {KitSelectionBoxes}
-                        </Stack>
-                    </Box>
-                </Slide>
+                <KitBuilder/>
             </Box>
 
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
