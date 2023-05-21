@@ -1,8 +1,8 @@
-import { Box, Button, Slide, Stack, Step, StepContent, StepLabel, Stepper, Theme, Typography, useTheme } from "@mui/material"
-import { useState } from "react";
-import { Link } from "react-router-dom"
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Box, Button, Stack, Step, StepLabel, Stepper, Theme, Typography, useTheme } from "@mui/material";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const useStyles = (theme: Theme) => ({
     stepContainer: {
